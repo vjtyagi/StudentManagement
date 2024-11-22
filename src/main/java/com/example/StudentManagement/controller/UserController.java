@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +46,8 @@ public class UserController {
                 .authenticate(new UsernamePasswordAuthenticationToken(userDTO.getUsername(),
                         userDTO.getPassword()));
         if (authentication.isAuthenticated()) {
-            return ResponseEntity.ok(jwtService.generateToken(userDTO.getUsername()));
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return ResponseEntity.ok(jwtService.generateToken(userDetails));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login Failed");
         }
