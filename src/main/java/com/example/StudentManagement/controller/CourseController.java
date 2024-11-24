@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.StudentManagement.dto.CourseResponseDTO;
 import com.example.StudentManagement.dto.CreateCourseDTO;
+import com.example.StudentManagement.dto.StudentResponseDTO;
 import com.example.StudentManagement.service.CourseService;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +29,7 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<CourseResponseDTO> createCourse(@Valid @RequestBody CreateCourseDTO courseDTO) {
         return ResponseEntity.ok(courseService.createCourse(courseDTO));
@@ -42,15 +45,23 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<CourseResponseDTO> updateCourse(@PathVariable Long Id,
             @RequestBody CreateCourseDTO courseDTO) {
         return ResponseEntity.ok(courseService.updateCourse(Id, courseDTO));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/students")
+    public ResponseEntity<List<StudentResponseDTO>> getAllStudents(@PathVariable Long id) {
+        List<StudentResponseDTO> students = courseService.getAllStudents(id);
+        return ResponseEntity.ok(students);
     }
 }

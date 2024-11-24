@@ -2,6 +2,8 @@ package com.example.StudentManagement.service;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+
 import com.example.StudentManagement.dto.CreateUserDTO;
 import com.example.StudentManagement.dto.UserResponseDTO;
 
@@ -17,5 +19,7 @@ public interface UserService {
     void deleteUser(Long id);
 
     UserResponseDTO linkRole(Long id, String roleName);
+
+    boolean isOwner(Authentication authentication, Long id);
 
 }

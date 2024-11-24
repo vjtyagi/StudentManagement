@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<RoleResponseDTO> createRole(@RequestBody CreateRoleDTO roleDTO) {
         return ResponseEntity.ok(roleService.createRole(roleDTO));
@@ -39,11 +41,13 @@ public class RoleController {
         return ResponseEntity.ok(roleService.getAllRoles());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<RoleResponseDTO> updateRole(@PathVariable Integer id, @RequestBody CreateRoleDTO roleDTO) {
         return ResponseEntity.ok(roleService.updateRole(id, roleDTO));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRole(@PathVariable Integer id) {
         roleService.deleteRole(id);

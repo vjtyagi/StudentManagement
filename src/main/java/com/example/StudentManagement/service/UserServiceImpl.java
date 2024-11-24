@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,12 @@ import com.example.StudentManagement.dto.CreateUserDTO;
 import com.example.StudentManagement.dto.UserResponseDTO;
 import com.example.StudentManagement.entity.Role;
 import com.example.StudentManagement.entity.User;
+import com.example.StudentManagement.entity.UserPrincipal;
 import com.example.StudentManagement.mapper.UserMapper;
 import com.example.StudentManagement.repository.RoleRepository;
 import com.example.StudentManagement.repository.UserRepository;
 
-@Service
+@Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -78,6 +80,12 @@ public class UserServiceImpl implements UserService {
         user.addRole(studentRole);
         User updatedUser = userRepository.save(user);
         return userMapper.toDto(updatedUser);
+    }
+
+    @Override
+    public boolean isOwner(Authentication authentication, Long id) {
+        UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
+        return user.getId().equals(id);
     }
 
 }

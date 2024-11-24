@@ -6,6 +6,7 @@ import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +26,8 @@ import com.example.StudentManagement.dto.UserResponseDTO;
 import com.example.StudentManagement.service.JwtService;
 import com.example.StudentManagement.service.UserService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -40,6 +43,7 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(userDTO));
     }
 
+    @SecurityRequirement(name = "")
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody UserLoginDTO userDTO) {
         Authentication authentication = authenticationManager
@@ -54,26 +58,31 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or @userService.isOwner(authentication, #id)")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody CreateUserDTO userDTO) {
         return ResponseEntity.ok(userService.updateUser(id, userDTO));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{userId}/linkRole/{roleName}")
     public ResponseEntity<UserResponseDTO> linkRole(@PathVariable Long userId, @PathVariable String roleName) {
         return ResponseEntity.ok(userService.linkRole(userId, roleName));

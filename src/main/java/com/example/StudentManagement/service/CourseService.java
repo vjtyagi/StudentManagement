@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.StudentManagement.dto.CourseResponseDTO;
 import com.example.StudentManagement.dto.CreateCourseDTO;
+import com.example.StudentManagement.dto.StudentResponseDTO;
 
 public interface CourseService {
     CourseResponseDTO createCourse(CreateCourseDTO courseDTO);
@@ -15,4 +16,8 @@ public interface CourseService {
     CourseResponseDTO updateCourse(Long id, CreateCourseDTO courseDTO);
 
     void deleteCourse(Long id);
+
+    List<StudentResponseDTO> getAllStudents(Long id);
+
+    List<CourseResponseDTO> getCoursesByStudentId(Long id);
 }

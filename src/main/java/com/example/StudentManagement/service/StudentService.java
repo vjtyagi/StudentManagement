@@ -2,7 +2,10 @@ package com.example.StudentManagement.service;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+
 import com.example.StudentManagement.dto.CreateStudentDTO;
+import com.example.StudentManagement.dto.EnrollmentResponseDTO;
 import com.example.StudentManagement.dto.StudentResponseDTO;
 import com.example.StudentManagement.entity.Student;
 
@@ -17,6 +20,10 @@ public interface StudentService {
 
     void deleteStudent(Long id);
 
-    public StudentResponseDTO linkStudentToUser(Long studentId, Long userId);
+    StudentResponseDTO linkStudentToUser(Long studentId, Long userId);
+
+    List<EnrollmentResponseDTO> getStudentEnrollments(Long studentId);
+
+    boolean isOwner(Authentication authentication, Long id);
 
 }

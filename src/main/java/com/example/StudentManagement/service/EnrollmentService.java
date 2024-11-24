@@ -1,5 +1,7 @@
 package com.example.StudentManagement.service;
 
+import org.springframework.security.core.Authentication;
+
 import com.example.StudentManagement.dto.CreateEnrollmentDTO;
 import com.example.StudentManagement.dto.EnrollmentResponseDTO;
 
@@ -11,4 +13,7 @@ public interface EnrollmentService {
     EnrollmentResponseDTO updateEnrollment(Long id, CreateEnrollmentDTO enrollmentDTO);
 
     void deleteEnrollment(Long id);
+
+    boolean isOwner(Long id, Authentication authentication);
+
 }
