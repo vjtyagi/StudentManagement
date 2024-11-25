@@ -16,4 +16,6 @@ public interface EnrollmentService {
 
     boolean isOwner(Long id, Authentication authentication);
 
+    double calculateGPA(Long studentId);
+
 }

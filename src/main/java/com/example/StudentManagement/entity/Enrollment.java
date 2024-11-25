@@ -1,7 +1,12 @@
 package com.example.StudentManagement.entity;
 
+import com.example.StudentManagement.entity.enums.EnrollmentStatus;
+import com.example.StudentManagement.entity.enums.Grade;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "enrollments")
@@ -27,17 +33,24 @@ public class Enrollment {
 
     @Column(nullable = false)
     private String semester;
-    private String grade;
+
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private EnrollmentStatus status = EnrollmentStatus.ENROLLED;
 
     public Enrollment() {
     }
 
-    public Enrollment(Long id, Student student, Course course, String semester, String grade) {
+    public Enrollment(Long id, Student student, Course course, String semester, Grade grade, EnrollmentStatus status) {
         this.id = id;
         this.student = student;
         this.course = course;
         this.semester = semester;
         this.grade = grade;
+        this.status = status;
     }
 
     public Long getId() {
@@ -72,12 +85,20 @@ public class Enrollment {
         this.semester = semester;
     }
 
-    public String getGrade() {
+    public Grade getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Grade grade) {
         this.grade = grade;
+    }
+
+    public EnrollmentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EnrollmentStatus status) {
+        this.status = status;
     }
 
 }

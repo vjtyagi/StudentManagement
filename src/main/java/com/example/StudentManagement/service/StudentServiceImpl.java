@@ -74,7 +74,6 @@ public class StudentServiceImpl implements StudentService {
         existingStudent.setLastName(studentDTO.getLastName());
         existingStudent.setDateOfBirth(studentDTO.getDateOfBirth());
         existingStudent.setDepartment(studentDTO.getDepartment());
-        existingStudent.setEnrollmentStatus(studentDTO.getEnrollmentStatus());
         Student updatedStudent = studentRepository.save(existingStudent);
         return studentMapper.toDto(updatedStudent);
 

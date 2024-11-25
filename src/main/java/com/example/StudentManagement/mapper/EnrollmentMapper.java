@@ -12,6 +12,7 @@ public class EnrollmentMapper {
         Enrollment enrollment = new Enrollment();
         enrollment.setSemester(enrollmentDTO.getSemester());
         enrollment.setGrade(enrollmentDTO.getGrade());
+        enrollment.setStatus(enrollmentDTO.getStatus());
         return enrollment;
     }
 
@@ -22,6 +23,7 @@ public class EnrollmentMapper {
         responseDTO.setGrade(enrollment.getGrade());
         responseDTO.setSemester(enrollment.getSemester());
         responseDTO.setId(enrollment.getId());
+        responseDTO.setStatus(enrollment.getStatus());
         return responseDTO;
     }
 }

@@ -42,10 +42,6 @@ public class Student {
     @NotNull
     private Department Department;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private EnrollmentStatus enrollmentStatus;
-
     private LocalDate dateOfBirth;
 
     public Student() {
@@ -53,13 +49,12 @@ public class Student {
 
     public Student(Long id, User user, String firstName, String lastName,
             com.example.StudentManagement.entity.enums.@NotNull Department department,
-            @NotNull EnrollmentStatus enrollmentStatus, LocalDate dateOfBirth) {
+            LocalDate dateOfBirth) {
         this.id = id;
         this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
         Department = department;
-        this.enrollmentStatus = enrollmentStatus;
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -101,14 +96,6 @@ public class Student {
 
     public void setDepartment(Department department) {
         Department = department;
-    }
-
-    public EnrollmentStatus getEnrollmentStatus() {
-        return enrollmentStatus;
-    }
-
-    public void setEnrollmentStatus(EnrollmentStatus enrollmentStatus) {
-        this.enrollmentStatus = enrollmentStatus;
     }
 
     public LocalDate getDateOfBirth() {

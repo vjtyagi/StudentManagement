@@ -1,12 +1,8 @@
 package com.example.StudentManagement.dto;
 
-import com.example.StudentManagement.entity.Course;
-import com.example.StudentManagement.entity.Student;
+import com.example.StudentManagement.entity.enums.EnrollmentStatus;
+import com.example.StudentManagement.entity.enums.Grade;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 
 public class CreateEnrollmentDTO {
@@ -16,17 +12,20 @@ public class CreateEnrollmentDTO {
     @NotNull(message = "Course ID is required")
     private Long courseId;
     private String semester;
-    private String grade;
+    private Grade grade;
+    private EnrollmentStatus status;
 
     public CreateEnrollmentDTO() {
     }
 
     public CreateEnrollmentDTO(@NotNull(message = "Student ID is required") Long studentId,
-            @NotNull(message = "Course ID is required") Long courseId, String semester, String grade) {
+            @NotNull(message = "Course ID is required") Long courseId, String semester, Grade grade,
+            EnrollmentStatus status) {
         this.studentId = studentId;
         this.courseId = courseId;
         this.semester = semester;
         this.grade = grade;
+        this.status = status;
     }
 
     public Long getStudentId() {
@@ -53,12 +52,20 @@ public class CreateEnrollmentDTO {
         this.semester = semester;
     }
 
-    public String getGrade() {
+    public Grade getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Grade grade) {
         this.grade = grade;
+    }
+
+    public EnrollmentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EnrollmentStatus status) {
+        this.status = status;
     }
 
 }

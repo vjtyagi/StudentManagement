@@ -1,21 +1,27 @@
 package com.example.StudentManagement.dto;
 
+import com.example.StudentManagement.entity.enums.EnrollmentStatus;
+import com.example.StudentManagement.entity.enums.Grade;
+
 public class EnrollmentResponseDTO {
     private Long id;
     private Long studentId;
     private Long courseId;
     private String semester;
-    private String grade;
+    private Grade grade;
+    private EnrollmentStatus status;
 
     public EnrollmentResponseDTO() {
     }
 
-    public EnrollmentResponseDTO(Long id, Long studentId, Long courseId, String semester, String grade) {
+    public EnrollmentResponseDTO(Long id, Long studentId, Long courseId, String semester, Grade grade,
+            EnrollmentStatus status) {
         this.id = id;
         this.studentId = studentId;
         this.courseId = courseId;
         this.semester = semester;
         this.grade = grade;
+        this.status = status;
     }
 
     public Long getId() {
@@ -50,12 +56,20 @@ public class EnrollmentResponseDTO {
         this.semester = semester;
     }
 
-    public String getGrade() {
+    public Grade getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Grade grade) {
         this.grade = grade;
+    }
+
+    public EnrollmentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EnrollmentStatus status) {
+        this.status = status;
     }
 
 }

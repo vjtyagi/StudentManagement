@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.example.StudentManagement.entity.Course;
 import com.example.StudentManagement.entity.Enrollment;
@@ -17,4 +18,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     @Query("SELECT e.course FROM Enrollment e WHERE e.student.id = :id")
     List<Course> findCoursesByStudentId(Long id);
+
+    @Query("SELECT e FROM Enrollment e  JOIN FETCH e.course WHERE e.student.id = :studentId AND e.grade IS NOT NULL AND e.status = 'GRADUATED' ")
+    List<Enrollment> findCompletedEnrollmentsByStudentId(@Param("studentId") Long studentId);
 }

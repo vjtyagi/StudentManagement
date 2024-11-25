@@ -36,7 +36,9 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
     @Autowired
-    CourseService courseService;
+    private CourseService courseService;
+    @Autowired
+    private EnrollmentService enrollmentService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
@@ -89,6 +91,13 @@ public class StudentController {
     public ResponseEntity<List<CourseResponseDTO>> getStudentCourses(@PathVariable Long id) {
         List<CourseResponseDTO> courses = courseService.getCoursesByStudentId(id);
         return ResponseEntity.ok(courses);
+    }
+
+    @PreAuthorize("hasRole('ADMIN') or @studentService.isOwner(authentication, #id)")
+    @GetMapping("/{id}/gpa")
+    public ResponseEntity<Double> calculateGPA(@PathVariable Long id) {
+        double gpa = enrollmentService.calculateGPA(id);
+        return ResponseEntity.ok(gpa);
     }
 
 }

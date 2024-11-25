@@ -14,7 +14,6 @@ public class StudentMapper {
         student.setLastName(dto.getLastName());
         student.setDateOfBirth(dto.getDateOfBirth());
         student.setDepartment(dto.getDepartment());
-        student.setEnrollmentStatus(dto.getEnrollmentStatus());
         return student;
     }
 
@@ -25,7 +24,6 @@ public class StudentMapper {
         dto.setLastName(student.getLastName());
         dto.setDateOfBirth(student.getDateOfBirth());
         dto.setDepartment(student.getDepartment());
-        dto.setEnrollmentStatus(student.getEnrollmentStatus());
         return dto;
     }
 }

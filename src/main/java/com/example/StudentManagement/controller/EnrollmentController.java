@@ -1,5 +1,7 @@
 package com.example.StudentManagement.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +25,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/enrollments")
 @Validated
 public class EnrollmentController {
-
+    private static final Logger logger = LoggerFactory.getLogger(EnrollmentController.class);
     @Autowired
     private EnrollmentService enrollmentService;
 
@@ -44,6 +46,7 @@ public class EnrollmentController {
     @PutMapping("/{id}")
     public ResponseEntity<EnrollmentResponseDTO> updateEnrollment(@PathVariable Long id,
             @RequestBody CreateEnrollmentDTO enrollmentDTO) {
+        logger.debug("enrollmentStatus {}", enrollmentDTO.getStatus());
         return ResponseEntity.ok(enrollmentService.updateEnrollment(id, enrollmentDTO));
     }
 
