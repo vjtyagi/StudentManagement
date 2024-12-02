@@ -2,28 +2,19 @@ package com.example.StudentManagement.dto;
 
 import java.time.LocalDate;
 
-import com.example.StudentManagement.entity.enums.Department;
-import com.example.StudentManagement.entity.enums.EnrollmentStatus;
-
 public class StudentResponseDTO {
     private Long id;
     private String firstName;
     private String lastName;
-    private Department Department;
-    private EnrollmentStatus enrollmentStatus;
     private LocalDate dateOfBirth;
 
     public StudentResponseDTO() {
     }
 
-    public StudentResponseDTO(Long id, String firstName, String lastName,
-            com.example.StudentManagement.entity.enums.Department department, EnrollmentStatus enrollmentStatus,
-            LocalDate dateOfBirth) {
+    public StudentResponseDTO(Long id, String firstName, String lastName, LocalDate dateOfBirth) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        Department = department;
-        this.enrollmentStatus = enrollmentStatus;
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -49,22 +40,6 @@ public class StudentResponseDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public Department getDepartment() {
-        return Department;
-    }
-
-    public void setDepartment(Department department) {
-        Department = department;
-    }
-
-    public EnrollmentStatus getEnrollmentStatus() {
-        return enrollmentStatus;
-    }
-
-    public void setEnrollmentStatus(EnrollmentStatus enrollmentStatus) {
-        this.enrollmentStatus = enrollmentStatus;
     }
 
     public LocalDate getDateOfBirth() {

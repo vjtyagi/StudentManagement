@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.StudentManagement.dto.CourseResponseDTO;
 import com.example.StudentManagement.dto.CreateCourseDTO;
 import com.example.StudentManagement.dto.StudentResponseDTO;
+import com.example.StudentManagement.entity.enums.Department;
 import com.example.StudentManagement.service.CourseService;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,5 +64,10 @@ public class CourseController {
     public ResponseEntity<List<StudentResponseDTO>> getAllStudents(@PathVariable Long id) {
         List<StudentResponseDTO> students = courseService.getAllStudents(id);
         return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/department/{department}")
+    public ResponseEntity<List<CourseResponseDTO>> getCoursesByDepartment(@PathVariable Department department) {
+        return ResponseEntity.ok(courseService.getCoursesByDeparment(department));
     }
 }

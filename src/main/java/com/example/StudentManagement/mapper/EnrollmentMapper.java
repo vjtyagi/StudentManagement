@@ -3,6 +3,7 @@ package com.example.StudentManagement.mapper;
 import org.springframework.stereotype.Component;
 
 import com.example.StudentManagement.dto.CreateEnrollmentDTO;
+import com.example.StudentManagement.dto.EnrollmentCourseDTO;
 import com.example.StudentManagement.dto.EnrollmentResponseDTO;
 import com.example.StudentManagement.entity.Enrollment;
 
@@ -24,6 +25,19 @@ public class EnrollmentMapper {
         responseDTO.setSemester(enrollment.getSemester());
         responseDTO.setId(enrollment.getId());
         responseDTO.setStatus(enrollment.getStatus());
+        return responseDTO;
+    }
+
+    public EnrollmentCourseDTO toCourseDTO(Enrollment enrollment) {
+        EnrollmentCourseDTO responseDTO = new EnrollmentCourseDTO();
+        responseDTO.setCourseId(enrollment.getCourse().getId());
+        responseDTO.setStudentId(enrollment.getStudent().getId());
+        responseDTO.setGrade(enrollment.getGrade());
+        responseDTO.setSemester(enrollment.getSemester());
+        responseDTO.setId(enrollment.getId());
+        responseDTO.setStatus(enrollment.getStatus());
+        responseDTO.setCourseName(enrollment.getCourse().getCourseName());
+        responseDTO.setDepartment(enrollment.getCourse().getDepartment());
         return responseDTO;
     }
 }

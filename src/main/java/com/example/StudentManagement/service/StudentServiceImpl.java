@@ -7,10 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.StudentManagement.dto.CreateStudentDTO;
+import com.example.StudentManagement.dto.CreateStudentUserDTO;
+import com.example.StudentManagement.dto.CreateUserDTO;
 import com.example.StudentManagement.dto.EnrollmentResponseDTO;
 import com.example.StudentManagement.dto.StudentResponseDTO;
 import com.example.StudentManagement.entity.Enrollment;
@@ -39,13 +42,12 @@ public class StudentServiceImpl implements StudentService {
     private EnrollmentRepository enrollmentRepository;
     @Autowired
     private EnrollmentMapper enrollmentMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public StudentResponseDTO createStudent(CreateStudentDTO studentDTO) {
         Student student = studentMapper.toEntity(studentDTO);
-        User savedUser = userRepository.findByUsername(studentDTO.getUserName())
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
-        student.setUser(savedUser);
         Student savedStudent = studentRepository.save(student);
         return studentMapper.toDto(savedStudent);
     }
@@ -73,7 +75,6 @@ public class StudentServiceImpl implements StudentService {
         existingStudent.setFirstName(studentDTO.getFirstName());
         existingStudent.setLastName(studentDTO.getLastName());
         existingStudent.setDateOfBirth(studentDTO.getDateOfBirth());
-        existingStudent.setDepartment(studentDTO.getDepartment());
         Student updatedStudent = studentRepository.save(existingStudent);
         return studentMapper.toDto(updatedStudent);
 
@@ -111,6 +112,23 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new RuntimeException("Student not found"));
         boolean result = student.getId().equals(id);
         return result;
+    }
+
+    @Override
+    public StudentResponseDTO createStudentWithUser(CreateStudentUserDTO studentDTO) {
+        // Step1: Create a user
+        User user = new User();
+        user.setUsername(studentDTO.getUsername());
+        user.setPassword(passwordEncoder.encode(studentDTO.getPassword()));
+        user.setEmail(studentDTO.getEmail());
+
+        User savedUser = userRepository.save(user);
+
+        // Step 2: Create a student by settting user reference
+        Student student = studentMapper.toEntity(studentDTO);
+        student.setUser(savedUser);
+        Student savedStudent = studentRepository.save(student);
+        return studentMapper.toDto(savedStudent);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.StudentManagement.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.StudentManagement.dto.CreateEnrollmentDTO;
+import com.example.StudentManagement.dto.EnrollmentCourseDTO;
 import com.example.StudentManagement.dto.EnrollmentResponseDTO;
 import com.example.StudentManagement.service.EnrollmentService;
 
@@ -55,6 +58,12 @@ public class EnrollmentController {
     public ResponseEntity<Void> deleteEnrollment(@PathVariable Long id) {
         enrollmentService.deleteEnrollment(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<EnrollmentCourseDTO>> getAllEnrollments() {
+        return ResponseEntity.ok(enrollmentService.getAllEnrollmentsWithCourse());
     }
 
 }

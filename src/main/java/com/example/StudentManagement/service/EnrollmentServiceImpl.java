@@ -2,6 +2,7 @@ package com.example.StudentManagement.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.StudentManagement.dto.CreateEnrollmentDTO;
+import com.example.StudentManagement.dto.EnrollmentCourseDTO;
 import com.example.StudentManagement.dto.EnrollmentResponseDTO;
 import com.example.StudentManagement.entity.Course;
 import com.example.StudentManagement.entity.Enrollment;
@@ -105,6 +107,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 double gpa = totalCredits > 0 ? totalGradePoints / totalCredits : 0.0;
                 BigDecimal roundedGpa = BigDecimal.valueOf(gpa).setScale(2, RoundingMode.HALF_UP);
                 return roundedGpa.doubleValue();
+        }
+
+        @Override
+        public List<EnrollmentCourseDTO> getAllEnrollmentsWithCourse() {
+                List<Enrollment> enrollments = enrollmentRepository.findAll();
+                List<EnrollmentCourseDTO> enrollmentList = new ArrayList<>();
+                for (Enrollment enrollment : enrollments) {
+                        enrollmentList.add(enrollmentMapper.toCourseDTO(enrollment));
+                }
+                return enrollmentList;
         }
 
 }

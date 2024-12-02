@@ -12,6 +12,7 @@ import com.example.StudentManagement.dto.CreateCourseDTO;
 import com.example.StudentManagement.dto.StudentResponseDTO;
 import com.example.StudentManagement.entity.Course;
 import com.example.StudentManagement.entity.Student;
+import com.example.StudentManagement.entity.enums.Department;
 import com.example.StudentManagement.mapper.CourseMapper;
 import com.example.StudentManagement.mapper.StudentMapper;
 import com.example.StudentManagement.repository.CourseRepository;
@@ -83,6 +84,16 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseResponseDTO> getCoursesByStudentId(Long id) {
         List<Course> courses = enrollmentRepository.findCoursesByStudentId(id);
+        List<CourseResponseDTO> courseList = new ArrayList<>();
+        for (Course course : courses) {
+            courseList.add(courseMapper.toDto(course));
+        }
+        return courseList;
+    }
+
+    @Override
+    public List<CourseResponseDTO> getCoursesByDeparment(Department department) {
+        List<Course> courses = courseRepository.findByDepartment(department);
         List<CourseResponseDTO> courseList = new ArrayList<>();
         for (Course course : courses) {
             courseList.add(courseMapper.toDto(course));

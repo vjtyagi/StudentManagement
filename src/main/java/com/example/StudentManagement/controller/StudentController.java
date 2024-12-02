@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.StudentManagement.dto.CourseResponseDTO;
 import com.example.StudentManagement.dto.CreateStudentDTO;
+import com.example.StudentManagement.dto.CreateStudentUserDTO;
 import com.example.StudentManagement.dto.EnrollmentResponseDTO;
 import com.example.StudentManagement.dto.StudentResponseDTO;
 import com.example.StudentManagement.service.CourseService;
@@ -98,6 +99,13 @@ public class StudentController {
     public ResponseEntity<Double> calculateGPA(@PathVariable Long id) {
         double gpa = enrollmentService.calculateGPA(id);
         return ResponseEntity.ok(gpa);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/withuser")
+    public ResponseEntity<StudentResponseDTO> createStudentWithUser(
+            @RequestBody CreateStudentUserDTO createStudentDTO) {
+        return ResponseEntity.ok(studentService.createStudentWithUser(createStudentDTO));
     }
 
 }

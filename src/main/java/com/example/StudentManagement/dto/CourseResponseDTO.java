@@ -2,12 +2,6 @@ package com.example.StudentManagement.dto;
 
 import com.example.StudentManagement.entity.enums.Department;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 public class CourseResponseDTO {
     private Long id;
     private String courseCode;

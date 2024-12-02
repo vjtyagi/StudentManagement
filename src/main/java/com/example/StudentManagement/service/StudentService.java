@@ -5,12 +5,15 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 
 import com.example.StudentManagement.dto.CreateStudentDTO;
+import com.example.StudentManagement.dto.CreateStudentUserDTO;
 import com.example.StudentManagement.dto.EnrollmentResponseDTO;
 import com.example.StudentManagement.dto.StudentResponseDTO;
 import com.example.StudentManagement.entity.Student;
 
 public interface StudentService {
     StudentResponseDTO createStudent(CreateStudentDTO studentDTO);
+
+    StudentResponseDTO createStudentWithUser(CreateStudentUserDTO studentDTO);
 
     StudentResponseDTO getStudentById(Long id);
 
